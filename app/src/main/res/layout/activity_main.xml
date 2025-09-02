@@ -214,6 +214,88 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/formacao_tv"/>
 
+        <EditText
+            android:id="@+id/ano_formatura_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ano de formatura"
+            android:inputType="date"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/formacao_sp" />
+
+        <LinearLayout
+            android:id="@+id/ano_conclusao_intituicao_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ano_formatura_et" >
+
+            <EditText
+                android:id="@+id/ano_conclusao_et"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="Ano de conclusão"
+                android:inputType="date"/>
+
+            <EditText
+                android:id="@+id/instituicao_et"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:hint="Instituição"
+                android:inputType="text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/titulo_monografia_orientador_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ano_conclusao_intituicao_ll" >
+
+            <EditText
+                android:id="@+id/titulo_monografia_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Títulio de monografia"
+                android:inputType="date"/>
+
+            <EditText
+                android:id="@+id/orientador_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Orientador"
+                android:inputType="text"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/vagas_interesse_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Vagas de Interesse"
+            android:inputType="textMultiLine"
+            android:scrollbars="vertical"
+            android:padding="5dp"
+            android:layout_margin="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titulo_monografia_orientador_ll"/>
+
         <Button
             android:id="@+id/salvar_bt"
             android:layout_width="match_parent"
@@ -223,7 +305,7 @@
             android:layout_margin="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/formacao_sp" />
+            app:layout_constraintTop_toBottomOf="@id/vagas_interesse_et" />
 
         <Button
             android:id="@+id/limpar_bt"
