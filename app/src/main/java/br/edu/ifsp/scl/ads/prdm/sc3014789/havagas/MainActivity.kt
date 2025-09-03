@@ -3,7 +3,9 @@ package br.edu.ifsp.scl.ads.prdm.sc3014789.havagas
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
 import android.widget.CheckBox
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import br.edu.ifsp.scl.ads.prdm.sc3014789.havagas.databinding.ActivityMainBinding
 import java.util.Calendar
@@ -22,9 +24,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupListeners() = with(activityMainBinding) {
+    private fun setupListeners() {
         setupCelularToggle()
         setupDataNascimentoPicker()
+        setupFormacaoToggle()
     }
 
     private fun setupCelularToggle() = with(activityMainBinding) {
@@ -56,6 +59,51 @@ class MainActivity : AppCompatActivity() {
             )
 
             datePicker.show()
+        }
+    }
+
+    private fun setupFormacaoToggle() = with(activityMainBinding) {
+        formacaoSp.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+            val ENSINO_BASICO_OPTIONS = listOf(0, 1)
+            val ENSINO_SUPERIOR_OPTIONS = listOf(2, 3, 4, 5)
+            val POS_GRADUACAO_OPTIONS = listOf(4, 5)
+
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                setVisibilityBySelectedPosition(position)
+            }
+
+            private fun setVisibilityBySelectedPosition(position: Int) {
+                if (position in ENSINO_BASICO_OPTIONS) {
+                    anoFormaturaEt.visibility = View.VISIBLE
+                    anoConclusaoIntituicaoLl.visibility = View.GONE
+                    tituloMonografiaOrientadorLl.visibility = View.GONE
+                    anoConclusaoEt.setText("")
+                    instituicaoEt.setText("")
+                    tituloMonografiaEt.setText("")
+                    orientadorEt.setText("")
+                } else {
+                    anoFormaturaEt.visibility = View.GONE
+                    anoFormaturaEt.setText("")
+                }
+
+                if (position in ENSINO_SUPERIOR_OPTIONS) {
+                    anoConclusaoIntituicaoLl.visibility = View.VISIBLE
+                    tituloMonografiaOrientadorLl.visibility = View.GONE
+                    tituloMonografiaEt.setText("")
+                    orientadorEt.setText("")
+                }
+                if (position in POS_GRADUACAO_OPTIONS) {
+                    tituloMonografiaOrientadorLl.visibility = View.VISIBLE
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+
         }
     }
 
