@@ -82,10 +82,7 @@ class MainActivity : AppCompatActivity() {
                     anoFormaturaEt.visibility = View.VISIBLE
                     anoConclusaoIntituicaoLl.visibility = View.GONE
                     tituloMonografiaOrientadorLl.visibility = View.GONE
-                    anoConclusaoEt.setText("")
-                    instituicaoEt.setText("")
-                    tituloMonografiaEt.setText("")
-                    orientadorEt.setText("")
+                    clearEditTexts(listOf(anoConclusaoEt, instituicaoEt, tituloMonografiaEt, orientadorEt))
                 } else {
                     anoFormaturaEt.visibility = View.GONE
                     anoFormaturaEt.setText("")
@@ -94,12 +91,16 @@ class MainActivity : AppCompatActivity() {
                 if (position in ENSINO_SUPERIOR_OPTIONS) {
                     anoConclusaoIntituicaoLl.visibility = View.VISIBLE
                     tituloMonografiaOrientadorLl.visibility = View.GONE
-                    tituloMonografiaEt.setText("")
-                    orientadorEt.setText("")
+                    clearEditTexts(listOf(tituloMonografiaEt, orientadorEt))
                 }
                 if (position in POS_GRADUACAO_OPTIONS) {
                     tituloMonografiaOrientadorLl.visibility = View.VISIBLE
                 }
+            }
+
+            private fun clearEditTexts(editTextList: List<EditText>) {
+                for (editText in editTextList)
+                    editText.setText("")
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
