@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.CheckBox
 import android.widget.EditText
-import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import br.edu.ifsp.scl.ads.prdm.sc3014789.havagas.databinding.ActivityMainBinding
 import java.util.Calendar
@@ -34,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         setupDataNascimentoPicker()
         setupFormacaoToggle()
         setupSalvarButton()
+        setupLimparButton()
     }
 
     private fun setupCelularToggle() = with(activityMainBinding) {
@@ -101,11 +101,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            private fun clearEditTexts(editTextList: List<EditText>) {
-                for (editText in editTextList)
-                    editText.setText("")
-            }
-
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
         }
@@ -164,12 +159,35 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupLimparButton() = with(activityMainBinding) {
+        limparBt.setOnClickListener {
+            clearFields()
+        }
+
+    }
+
     private fun getSelectedSexo(): String = with(activityMainBinding) {
         return when {
             masculinoRb.isChecked -> masculinoRb.text.toString()
             femininoRb.isChecked -> femininoRb.text.toString()
             else -> ""
         }
+    }
+
+    private fun clearFields() = with(activityMainBinding) {
+        clearEditTexts(listOf(nomeCompletoEt, emailEt, telefoneEt, celularEt, dataNascimentoEt, anoFormaturaEt, vagasInteresseEt))
+
+        telefoneComercialRb.isChecked = true
+        masculinoRb.isChecked = true
+        receberAtualizacoesCb.isChecked = false
+        adicionarCelularCb.isChecked = false
+        celularEt.visibility = View.GONE
+        formacaoSp.setSelection(0)
+    }
+
+    private fun clearEditTexts(editTextList: List<EditText>) {
+        for (editText in editTextList)
+            editText.setText("")
     }
 
 }
