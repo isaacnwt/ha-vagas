@@ -1,16 +1,21 @@
 package br.edu.ifsp.scl.ads.prdm.sc3014789.havagas
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import br.edu.ifsp.scl.ads.prdm.sc3014789.havagas.databinding.ActivityMainBinding
 import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
+    val ENSINO_BASICO_OPTIONS = listOf(0, 1)
+    val ENSINO_SUPERIOR_OPTIONS = listOf(2, 3, 4, 5)
+    val POS_GRADUACAO_OPTIONS = listOf(4, 5)
     private val activityMainBinding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -28,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         setupCelularToggle()
         setupDataNascimentoPicker()
         setupFormacaoToggle()
+        setupSalvarButton()
     }
 
     private fun setupCelularToggle() = with(activityMainBinding) {
@@ -64,9 +70,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupFormacaoToggle() = with(activityMainBinding) {
         formacaoSp.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
-            val ENSINO_BASICO_OPTIONS = listOf(0, 1)
-            val ENSINO_SUPERIOR_OPTIONS = listOf(2, 3, 4, 5)
-            val POS_GRADUACAO_OPTIONS = listOf(4, 5)
 
             override fun onItemSelected(
                 parent: AdapterView<*>?,
@@ -105,6 +108,67 @@ class MainActivity : AppCompatActivity() {
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
+        }
+    }
+
+    private fun setupSalvarButton() = with(activityMainBinding) {
+        salvarBt.setOnClickListener {
+            val nome = nomeCompletoEt.text.toString()
+            val email = emailEt.text.toString()
+            val receberEmails = if (receberAtualizacoesCb.isChecked) "Sim" else "Não"
+            val telefone = telefoneEt.text.toString()
+            val tipoTelefone = if (telefoneComercialRb.isChecked) "Comercial" else "Residencial"
+            val celular = if (adicionarCelularCb.isChecked) celularEt.text.toString() else "Não informado"
+            val dataNascimento = dataNascimentoEt.text.toString()
+            val sexo = getSelectedSexo()
+            val formacao = formacaoSp.selectedItem.toString()
+            val vagasInteresse = vagasInteresseEt.text.toString()
+            val anoFormatura = anoFormaturaEt.text.toString()
+            val anoConclusao = anoConclusaoEt.text.toString()
+            val instituicao = instituicaoEt.text.toString()
+            val tituloMonografia = tituloMonografiaEt.text.toString()
+            val orientador = orientadorEt.text.toString()
+
+            val posicaoFormacao = formacaoSp.selectedItemPosition
+
+            val resumo = StringBuilder().apply {
+                appendLine("Nome completo: $nome")
+                appendLine("E-mail: $email")
+                appendLine("Receber atualizações: $receberEmails")
+                appendLine("Telefone: $telefone ($tipoTelefone)")
+                appendLine("Celular: $celular")
+                appendLine("Sexo: $sexo")
+                appendLine("Data de nascimento: $dataNascimento")
+                appendLine("Formação: $formacao")
+
+                if (posicaoFormacao in ENSINO_BASICO_OPTIONS) {
+                    appendLine("Ano de formatura: $anoFormatura")
+                }
+                if (posicaoFormacao in ENSINO_SUPERIOR_OPTIONS) {
+                    appendLine("Ano de conclusão: $anoConclusao")
+                    appendLine("Instituição: $instituicao")
+                }
+                if (posicaoFormacao in POS_GRADUACAO_OPTIONS) {
+                    appendLine("Título da monografia: $tituloMonografia")
+                    appendLine("Orientador: $orientador")
+                }
+
+                appendLine("Vagas de interesse: $vagasInteresse")
+            }.toString()
+
+            AlertDialog.Builder(this@MainActivity)
+                .setTitle("Dados do Cadastro")
+                .setMessage(resumo)
+                .setPositiveButton("OK", null)
+                .show()
+        }
+    }
+
+    private fun getSelectedSexo(): String = with(activityMainBinding) {
+        return when {
+            masculinoRb.isChecked -> masculinoRb.text.toString()
+            femininoRb.isChecked -> femininoRb.text.toString()
+            else -> ""
         }
     }
 
